@@ -34,6 +34,7 @@ def check_email(email):
 
     Checks if the email message is greater than 2 characters, contains an '@'
     symbol with text before it, text after it, a period, and some more text.
+    Note: email addresses with only two characters between @ and . will fail.
 
     Args:
         email (str): Email address to be validated.
@@ -43,6 +44,27 @@ def check_email(email):
     """
     if len(email) > 2:
         x = re.findall('[a-zA-Z0-9]\S+@\S+[a-zA-Z]\S+[.]\S+[a-zA-Z]', email)
+        if len(x) > 0:
+            return True
+    return False
+
+
+def check_email_2(email):
+    """Check if email address is in a valid format.
+
+    Checks if the email message is greater than 2 characters, contains an '@'
+    symbol with text before it, text after it, a period, and some more text.
+    Note it is not very accurate - only checks that there is an @ and a . in
+    the email address.
+
+    Args:
+        email (str): Email address to be validated.
+
+    Returns:
+        True if email is in a valid format, False otherwise.
+    """
+    if len(email) > 2:
+        x = re.findall('^.*?@.*?\..*?$', email)
         if len(x) > 0:
             return True
     return False
@@ -97,7 +119,7 @@ def check_lead_zero(to_check):
     Returns:
         True if a leading 0 is found or the string is empty, False otherwise.
     """
-    if to_check in (None, ''):
+    if str(to_check) in (None, ''):
         return True
     elif str(to_check[0]) != '0':
         return False
@@ -477,6 +499,36 @@ def extract_lists(source_data):
     while i < len(source_data[0]):
         item = source_data[0][i]
         extracted_list.append(item)
+        i += 1
+    return extracted_list
+
+
+def extract_lists_all(source_data):
+    """Extract each item from a nested list into one list.
+    
+    Takes a list which holds multiple lists with a number of items. Extracts
+    each item so that it is one item in one list. Returns a list with
+    multiple items, from a list of lists.
+
+    Args:
+        source_data (list): A list holding multiple lists with one or multiple
+        items.
+
+    Returns:
+        extracted_list (list): A list with the contents of the inner lists
+        extracted.
+
+    File structure (source_data):
+        Lists within a list [][]
+    """
+    extracted_list = []
+    i = 0
+    while i < len(source_data):
+        j = 0
+        while j < len(source_data[1]):
+            item = source_data[i][j]
+            extracted_list.append(item)
+            j += 1
         i += 1
     return extracted_list
 
