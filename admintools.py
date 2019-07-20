@@ -172,7 +172,7 @@ def check_repeat_help():
             return False
 
 
-def confirm_files(f_name, r_files):
+def confirm_files(f_name, r_files, sort=False):
     """Print required files and have user press enter to continue.
     
     Orders the list on alphabetical order prior to displaying.
@@ -180,8 +180,11 @@ def confirm_files(f_name, r_files):
     Args:
         f_name (str): Name of file that is being processed.
         r_files (list): List of files that need to be present.
+        sort (bool): If True sorts returned list, else list returned in
+        order it is received.
     """
-    r_files.sort()
+    if sort:
+        r_files.sort()
     if len(r_files) == 1:
         text_f = 'this file is'
     else:
