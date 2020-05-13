@@ -524,6 +524,9 @@ def extract_lists_all(source_data):
     File structure (source_data):
         Lists within a list [][]
     """
+    # Check there are 2 or more items in source_data
+    if len(source_data) == 1:
+        return source_data[0]
     extracted_list = []
     i = 0
     while i < len(source_data):
